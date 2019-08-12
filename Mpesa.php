@@ -6,6 +6,7 @@
  * @Licence: MIT Licence
  * 
  * ********************************************/
+define("URL", "https://www.safaricom.co.ke/mpesa_online/lnmo_checkout_server.php?wsdl"); //Put the api endpint.
 class Mpesa {
 	public function __construct($config){
 		if(is_array($config)){
@@ -61,7 +62,7 @@ class Mpesa {
 		);
 
 		if($check = $this->submitRequest(URL,$post_string,$headers)){
-			$confirm = $this->confirmTransaction($response,$datetime,$passwd,$paybill);
+			$confirm = $this->confirmTransaction($check,$datetime,$passwd,$this->merchant_id);
 			$returns = array(
 				'checkout' => json_encode($check),
 				'confirm' => json_encode($confirm)
@@ -155,4 +156,3 @@ class Mpesa {
 		return $password;
 	}
 }
-?>
